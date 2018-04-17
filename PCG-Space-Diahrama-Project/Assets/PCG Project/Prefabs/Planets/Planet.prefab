@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cfc67a0351a2c541ba26e968dea608c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  astroidsChance: 2
   maxAstoridSpawnDist: 2
   minAstroidSpawnDist: 1.5
   minDensity: 0.1

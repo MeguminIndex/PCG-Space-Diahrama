@@ -7,6 +7,8 @@ public class AsteroidController : MonoBehaviour {
 
     // public Vector3 spawnArea;
 
+    public int astroidsChance;
+
     public float maxAstoridSpawnDist;
     public float minAstroidSpawnDist;
 
@@ -35,7 +37,12 @@ public class AsteroidController : MonoBehaviour {
     {
         //InitAsteroids();
 
-        InitPlanetAsteroids();
+
+
+        if (Random.Range(0, astroidsChance+1) == astroidsChance)
+            InitPlanetAsteroids();
+        else
+            Debug.Log(gameObject.name + "Generated No Asteroids");
 
     }
 
