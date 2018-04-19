@@ -142,14 +142,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 0
   useSeed: 0
-  minNPlanets: 3
-  maxNPlanets: 20
-  planetPrefab: {fileID: 1550020903971650, guid: 8d3202236b344ff48b657a513f793f7b,
-    type: 2}
   starTypesPrefabs:
   - {fileID: 1063012476467930, guid: 9e774a232e483644580bd4a95dcee001, type: 2}
+  minNPlanets: 20
+  maxNPlanets: 40
+  planetPrefab: {fileID: 1550020903971650, guid: 8d3202236b344ff48b657a513f793f7b,
+    type: 2}
   maxPlanDist: 1800
   minPlanDist: 260
+  maxPlanSize: 60
+  minPlanSize: 20
+  planetmindistOffset: 10
 --- !u!4 &98661911
 Transform:
   m_ObjectHideFlags: 0

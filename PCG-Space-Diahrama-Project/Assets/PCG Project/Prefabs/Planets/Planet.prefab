@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8d9a132bee5e047b5ce04b8dd32459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRedWeightDist: 550
+  maxRedWeightDist: 700
   maxBlueWeight: 1800
 --- !u!114 &114612888174509702
 MonoBehaviour:

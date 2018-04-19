@@ -10,9 +10,10 @@ public class PlanetGenerator : MonoBehaviour
 
     public float maxRedWeightDist;
     public float maxBlueWeight;
-   // public float 
-   
+    // public float 
 
+
+    private float rotationSpeed = 5.0f;
 
     // Use this for initialization
     void Start()
@@ -42,15 +43,25 @@ public class PlanetGenerator : MonoBehaviour
 
       
         tmpCol.r = Mathf.InverseLerp(maxRedWeightDist, 0.0f, closestSunDist);
-        tmpCol.b = Mathf.InverseLerp(maxRedWeightDist, maxBlueWeight, closestSunDist);
+        tmpCol.b = Mathf.InverseLerp(maxRedWeightDist/2, maxBlueWeight, closestSunDist);
       
-        tmpCol.a = 1;
+       // tmpCol.a = 1;
       
 
-        Debug.Log("Planet Colour: " + tmpCol.ToString());
+      //  Debug.Log("Planet Colour: " + tmpCol.ToString());
 
         mat.color = tmpCol;//update mat colour
         rend.material = mat;//update material
+
+    }
+
+    private void Update()
+    {
+
+        transform.Rotate((new Vector3(1, 1, 0) * rotationSpeed) * Time.deltaTime);
+
+
+
 
     }
 

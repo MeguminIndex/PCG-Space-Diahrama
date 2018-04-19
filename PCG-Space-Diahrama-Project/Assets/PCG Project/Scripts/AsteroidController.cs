@@ -127,7 +127,7 @@ public class AsteroidController : MonoBehaviour {
         density = Random.Range(minDensity,maxDensity);
 
         numstroids = (int)(volume * density);
-        Debug.Log("Number of astroids: " + numstroids.ToString());
+      //  Debug.Log("Number of astroids: " + numstroids.ToString());
         astroids.Capacity = numstroids;
 
 
@@ -178,6 +178,8 @@ public class AsteroidController : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
+
+        if(astroids != null)
         astroids.Clear();
         astroids = null;
     }

@@ -7,22 +7,24 @@ public class GenerateSolaSystem : MonoBehaviour {
     public int seed;
     public bool useSeed;
 
+    [Header("Star Properties")]
+    public GameObject[] starTypesPrefabs;
+
+    [Header("Planet Properties")]
     public int minNPlanets;
     public int maxNPlanets;
     public GameObject planetPrefab;
-
-    public GameObject[] starTypesPrefabs;
-
-    
-
-    GameObject sun;
-    
-
-    private int nPlanets;
     public float maxPlanDist;
     public float minPlanDist;
+    public float maxPlanSize;
+    public float minPlanSize;
+    public float planetmindistOffset;
 
 
+
+    //PRIVATE VARIABLES
+    GameObject sun;   
+    private int nPlanets;
     private int starTypeID;
 
     List<Vector3> planetPos;
@@ -36,15 +38,19 @@ public class GenerateSolaSystem : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        GenerateSystem();
 
-        
+    }
 
+
+    void GenerateSystem()
+    {
 
         planetPos = new List<Vector3>();
         planets = new List<GameObject>();
 
         if (useSeed)
-        Random.InitState(seed);
+            Random.InitState(seed);
 
         nPlanets = Random.Range(minNPlanets, maxNPlanets);
 
@@ -56,28 +62,59 @@ public class GenerateSolaSystem : MonoBehaviour {
 
         Debug.Log("N Planets: " + nPlanets.ToString());
 
-        for (int i = 0; i < nPlanets; i++)
+        
+
+        for (int i = 0, progress = 0; progress < nPlanets; progress++)
         {
             Vector3 pos = Vector3.zero;
-
-            float randDIst = Random.Range(minPlanDist,maxPlanDist);
-
+            float randDIst = Random.Range(minPlanDist, maxPlanDist);
             pos = Random.insideUnitSphere * randDIst;
 
-            //Debug.Log(pos);
-            planetPos.Add(pos);
+            //check planet is not too close
+
+            bool spawn = true;
+
+            for(int c =0; c < planetPos.Count; c++ )
+            {
+              //  Debug.Log(Vector3.Distance(pos, planetPos[c]));
+
+                if (Vector3.Distance(pos, planetPos[c]) < maxPlanSize + (maxPlanSize *2))
+                {
+                  //  Debug.Log("Dont generate PLANET");
+                    spawn = false;
+                    break;
+                }
+
+            }
+         //   Debug.Log("Planet SPawned");
+
+            if (spawn == true)
+            {
+                planetPos.Add(pos);
+                i++;
+            }
         }
 
 
-        for (int i = 0; i < nPlanets; i++)
+
+
+
+
+        for (int i = 0; i < planetPos.Count; i++)
         {
             GameObject spawned = GameObject.Instantiate(planetPrefab);
             spawned.transform.position = transform.TransformPoint(planetPos[i]);
-            
+            float size = Random.Range(minPlanSize,maxPlanSize);
+            spawned.transform.localScale = new Vector3(size, size, size);
+
+
             planets.Add(spawned);
         }
 
 
+
+
+        Debug.Log("Number of planets spawned: " + planets.Count);
     }
 
 
