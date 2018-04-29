@@ -136,41 +136,78 @@ public class PlanetGenerator : MonoBehaviour
 
     IEnumerator CheckToMoveDrone(int index)
     {
+        //update value for this drone to ensure coroutine is not ran again.
         moveDrone[index] = false;
-        Debug.Log("Moving Drone: " + index);
+       // Debug.Log("Moving Drone: " + index);
+
+        //call the coroutine for moving the drone
         yield return StartCoroutine(MoveDrone(index)); 
 
+        //update value so a new destination can be set
          moveDrone[index] = true;
     }
 
     IEnumerator MoveDrone(int index)
     {
-
+        //position for the drone to head to
         Vector3 endPosition = asteroidC.GetRandomAstroidPosition();
+
+        //grab refrence of drones rigidbody
         Rigidbody rb = salvageDrones[index].GetComponent<Rigidbody>();
 
+        
         bool destination = false;
-
+        //while the drone has not reached its destination loop
         while (destination == false)
         {
-            rb.MovePosition(Vector3.MoveTowards(salvageDrones[index].transform.position, endPosition, 0.5f));
+            //move the drone
+
+            Vector3 nexPositionStep = Vector3.MoveTowards(salvageDrones[index].transform.position, endPosition, 10.0f * Time.deltaTime);
+
+            Vector3 direction  = (endPosition - salvageDrones[index].transform.position);
+
+            float disPlanDrone = Vector3.Distance(salvageDrones[index].transform.position, transform.position);
+           // Debug.Log("Distance between drone and Planet: " + disPlanDrone);
+            if (disPlanDrone <= transform.lossyScale.x + 1.0f)
+            {
+               
+                Vector3 dir = transform.position - salvageDrones[index].transform.position;
+
+                direction = -dir ;// * (200.0f /*/ (disPlanDrone - transform.lossyScale.x) */);
+            //    Debug.Log(direction);
+            }
+
+            salvageDrones[index].transform.LookAt(salvageDrones[index].transform.position - direction);
+
+            //rb.MovePosition(nexPositionStep);
+            // rb.velocity = (endPosition - salvageDrones[index].transform.position) * Time.deltaTime * 10.0f;
+            //   rb.velocity = (direction *0.5f )  * Time.deltaTime * 7.0f;
+            rb.AddForce((direction * 0.5f) * Time.deltaTime * 25.0f);
+            //  Debug.Log("Velocity: " + rb.velocity);
+
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, 6);
 
 
-            //if (salvageDrones[index].transform.position == endPosition)
-            //    destination = true;
-
-            if (Vector3.Distance(rb.transform.position,endPosition) <= 0.8f)
+            if (Vector3.Distance(rb.transform.position,endPosition) <= 0.6f)
                 destination = true;
             else
                 yield return null;
 
 
+           
 
         }
 
         // the drone waits for a period of time as it deals with its buisness
-        yield return new WaitForSeconds(Random.Range(1, 4));
+        yield return new WaitForSeconds(Random.Range(1, 2));
 
+    }
+
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, transform.lossyScale.x + 1.0f);
     }
 
 }
