@@ -39,11 +39,17 @@ public class AsteroidController : MonoBehaviour {
 
 
 
-        if (Random.Range(0, astroidsChance+1) == astroidsChance)
+       
+
+    }
+
+
+    public void StartAstoridProcess()
+    {
+        if (Random.Range(0, 100 + 1) <= astroidsChance)
             InitPlanetAsteroids();
         else
             Debug.Log(gameObject.name + "Generated No Asteroids");
-
     }
 
 
@@ -175,6 +181,25 @@ public class AsteroidController : MonoBehaviour {
 
     }
 
+    public int GetNumAstroids()
+    {
+        if (astroids != null)
+            return astroids.Count;
+        else return 0;
+    }
+
+   public int GetRandomAstroidIndex()
+    {
+
+        return Random.Range(0, astroids.Count);
+    }
+
+    public Vector3 GetRandomAstroidPosition()
+    {
+
+        return astroids[GetRandomAstroidIndex()].transform.position;
+
+    }
 
     private void OnApplicationQuit()
     {

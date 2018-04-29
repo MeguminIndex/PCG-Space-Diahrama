@@ -98,6 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxRedWeightDist: 700
   maxBlueWeight: 1800
+  rotationSpeed: 0.5
+  salvagingDronePref: {fileID: 1634788297009312, guid: d40c5378497a00c4f9fa6fab60cd0bfe,
+    type: 2}
 --- !u!114 &114612888174509702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,10 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cfc67a0351a2c541ba26e968dea608c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  astroidsChance: 2
+  astroidsChance: 80
   maxAstoridSpawnDist: 2
   minAstroidSpawnDist: 1.5
-  minDensity: 0.1
+  minDensity: 0.3
   maxDensity: 2
   sizeMin: {x: 0.2, y: 0.2, z: 0.2}
   sizeMax: {x: 0.3, y: 0.3, z: 0.3}
