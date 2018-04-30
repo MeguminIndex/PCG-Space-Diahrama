@@ -11,6 +11,8 @@ public class PlanetGenerator : MonoBehaviour
     Material mat;
 
     AsteroidController asteroidC;
+    PlanetTextureMapping planMapping;
+
 
     public float maxRedWeightDist;
     public float maxBlueWeight;
@@ -29,6 +31,7 @@ public class PlanetGenerator : MonoBehaviour
     {
         rend = GetComponent<MeshRenderer>();//grab render
         asteroidC = GetComponent<AsteroidController>();
+        planMapping = GetComponent<PlanetTextureMapping>();
 
         InitPlanet();
 
@@ -36,7 +39,15 @@ public class PlanetGenerator : MonoBehaviour
 
         InitSpace();
 
+        //generate final texture
+        //StartCoroutine(WaitToGenerateMaps());
+
+ 
+
     }
+
+
+
 
     void InitPlanet()
     {
@@ -192,17 +203,32 @@ public class PlanetGenerator : MonoBehaviour
                 destination = true;
             else
                 yield return null;
-
-
-           
-
+            
         }
+        
 
         // the drone waits for a period of time as it deals with its buisness
         yield return new WaitForSeconds(Random.Range(1, 2));
 
     }
 
+    IEnumerator WaitToGenerateMaps()
+    {
+        yield return new WaitForSeconds(Random.Range(10,60));
+        planMapping.Generate();
+
+    }
+
+
+    public int GenerateFullTexture()
+    {
+        if (planMapping == null)
+            return -1;
+
+        planMapping.Generate();
+
+        return 0;
+    }
 
     void OnDrawGizmosSelected()
     {

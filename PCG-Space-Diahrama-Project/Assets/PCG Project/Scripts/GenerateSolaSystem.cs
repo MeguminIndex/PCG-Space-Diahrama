@@ -39,7 +39,9 @@ public class GenerateSolaSystem : MonoBehaviour {
     void Start()
     {
         GenerateSystem();
+        Time.timeScale = 0;//pausing the time allows easy way to stop all movement in my scene, reduce physical load since nextr function is demanding
 
+        StartCoroutine(UpdatePlenetTextures());
     }
 
 
@@ -118,5 +120,32 @@ public class GenerateSolaSystem : MonoBehaviour {
     }
 
 
+
+    IEnumerator UpdatePlenetTextures()
+    {
+        //hold time for generastion to conclude to help ensure everything is generated.
+        yield return new WaitForSecondsRealtime(5);
+        Debug.Log("Updating Planets Started");
+
+        int size = planets.Count;
+        for(int i=0; i < size; i++)
+        {
+            
+            PlanetGenerator tmp = planets[i].GetComponent<PlanetGenerator>();
+
+            if (tmp == null)
+                i -= 1;
+            else
+                i += tmp.GenerateFullTexture();
+
+            yield return new WaitForSecondsRealtime(2);
+
+
+        }
+
+        Debug.Log("Finished Updating Planets maps");
+
+        Time.timeScale = 1;
+    }
 
 }

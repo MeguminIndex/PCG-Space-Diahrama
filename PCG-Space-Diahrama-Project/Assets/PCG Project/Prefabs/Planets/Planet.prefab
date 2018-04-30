@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23051982973068558}
   - component: {fileID: 114612888174509702}
   - component: {fileID: 114033453768558320}
+  - component: {fileID: 114435395100871870}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -101,6 +102,24 @@ MonoBehaviour:
   rotationSpeed: 0.5
   salvagingDronePref: {fileID: 1634788297009312, guid: d40c5378497a00c4f9fa6fab60cd0bfe,
     type: 2}
+--- !u!114 &114435395100871870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1550020903971650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7f976ecfdaf874d984fd667fa8e2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolution: 512
+  noise: 0
+  turbulence: 0
+  perlinOctaves: 6
+  displacement: 4
+  frequency: 2
+  seed: 0
 --- !u!114 &114612888174509702
 MonoBehaviour:
   m_ObjectHideFlags: 1
