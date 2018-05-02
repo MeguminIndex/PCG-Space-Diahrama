@@ -289,11 +289,11 @@ public class PlanetGenerator : MonoBehaviour
         return 0;
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, transform.lossyScale.x + 1.0f);
-    }
+    //void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, transform.lossyScale.x + 1.0f);
+    //}
 
 }
 	

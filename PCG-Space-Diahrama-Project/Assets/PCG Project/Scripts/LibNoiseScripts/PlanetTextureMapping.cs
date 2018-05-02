@@ -56,7 +56,7 @@ public class PlanetTextureMapping : MonoBehaviour
         if(randomNoiseType == true)
         noise = (NoiseType)UnityEngine.Random.Range(0,6);
 
-        // Generate();
+        Generate();
        // Debug.Log("Noise Type: " + noise);
     }
 

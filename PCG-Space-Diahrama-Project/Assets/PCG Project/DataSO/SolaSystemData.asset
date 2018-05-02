@@ -11,11 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298eb445fa782c1448550b4c97b30d6d, type: 3}
   m_Name: SolaSystemData
   m_EditorClassIdentifier: 
-  seed: 0
+  seed: -245
   useSeed: 0
   starTypesPrefabs:
   - {fileID: 1063012476467930, guid: 9e774a232e483644580bd4a95dcee001, type: 2}
-  minNPlanets: 5
+  minNPlanets: 10
   maxNPlanets: 20
   planetPrefab: {fileID: 1550020903971650, guid: 8d3202236b344ff48b657a513f793f7b,
     type: 2}

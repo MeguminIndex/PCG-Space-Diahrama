@@ -43,7 +43,9 @@ public class GenerateSolaSystem : MonoBehaviour {
         GenerateSystem();
         Time.timeScale = 0;//pausing the time allows easy way to stop all movement in my scene, reduce physical load since nextr function is demanding
 
-        StartCoroutine(UpdatePlenetTextures());
+        //StartCoroutine(UpdatePlenetTextures());
+
+        StartCoroutine(DisableTimeDuration(5));
     }
 
 
@@ -125,7 +127,12 @@ public class GenerateSolaSystem : MonoBehaviour {
         Debug.Log("Number of planets spawned: " + planets.Count);
     }
 
-
+    IEnumerator DisableTimeDuration(float duration )
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1;
+    }
 
     IEnumerator UpdatePlenetTextures()
     {
@@ -143,19 +150,22 @@ public class GenerateSolaSystem : MonoBehaviour {
             PlanetGenerator tmp = planets[i].GetComponent<PlanetGenerator>();
 
             if (tmp == null)
+            {
                 i -= 1;
+                //yield return new WaitForSecondsRealtime(0.5f);
+            }
             else
                 i += tmp.GenerateFullTexture();
 
             if (wcount > 4)
             {
-                yield return new WaitForSecondsRealtime(1.5f);
+                //yield return new WaitForSecondsRealtime(0.5f);
                 wcount = 0;
             }
 
         }
 
-        Debug.Log("Finished Updating Planets maps");
+        Debug.Log("Finished Calling Planets updates");
 
         Time.timeScale = 1;
     }
