@@ -66,7 +66,21 @@ public class GenerateCube : MonoBehaviour {
 
     private void CreateTriangles()
     {
+        int quads = (xSize * ySize + xSize * zSize + ySize * zSize) * 2;
+        int[] triangles = new int[quads * 6];
+        int ring = (xSize + zSize) * 2;
+        int t = 0, v = 0;
 
+        for (int y = 0; y < ySize; y++, v++)
+        {
+            for (int q = 0; q < ring - 1; q++, v++)
+            {
+                t = SetQuad(triangles, t, v, v + 1, v + ring, v + ring + 1);
+            }
+            t = SetQuad(triangles, t, v, v - ring + 1, v + ring, v + 1);
+        }
+
+        mesh.triangles = triangles;
     }
 
     private static int SetQuad(int[] triangles, int i, int v00, int v10, int v01, int v11)

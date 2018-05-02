@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class AsteroidController : MonoBehaviour {
 
-    // public Vector3 spawnArea;
+     
 
     public int astroidsChance;
 
     public float maxAstoridSpawnDist;
     public float minAstroidSpawnDist;
 
-   // public int numPoints;
-   // public float mod;
+
 
 
     public float minDensity;
@@ -33,9 +32,16 @@ public class AsteroidController : MonoBehaviour {
     private int numstroids;
     private List<GameObject> astroids;
 
+
+    //Unused values
+    //public Vector3 spawnArea;
+    //public int numPoints;
+    //public float mod;
+
+
     private void Start()
     {
-        //InitAsteroids();
+       // InitAsteroids();
 
 
 
@@ -52,10 +58,12 @@ public class AsteroidController : MonoBehaviour {
             Debug.Log(gameObject.name + "Generated No Asteroids");
     }
 
-
+    //old Asteroids
     //public void InitAsteroids()
     //{
     //    astroids = new List<GameObject>();
+
+    //    density = Random.Range(minDensity, maxDensity);
 
     //    numstroids = (int)(spawnArea.sqrMagnitude * density);
     //    Debug.Log(numstroids);
@@ -63,23 +71,23 @@ public class AsteroidController : MonoBehaviour {
 
     //    //generate spawn point areas (groups), asteriods tend to group up a bit so having several base points for them to gravitate around good
     //    Vector3[] points = new Vector3[numPoints];
-    //    for(int i =0; i < numPoints; i++)
+    //    for (int i = 0; i < numPoints; i++)
     //    {
     //        //generate these points randomly so the layout could be different
     //        points[i] = new Vector3(Random.Range(-spawnArea.x, spawnArea.x),
     //            Random.Range(-spawnArea.y, spawnArea.y),
     //            Random.Range(-spawnArea.z, spawnArea.z));
     //    }
-                                     
-    //    for (int i =0; i <= numstroids; i++)
+
+    //    for (int i = 0; i <= numstroids; i++)
     //    {
     //        byte val = 0;
-    //        if( i % astroidsBeforeVariation == 0)
+    //        if (i % astroidsBeforeVariation == 0)
     //        {
     //            val = (byte)Random.Range(0, astroidPrefabs.Length);
     //        }
 
-          
+
     //        GameObject astroid = GameObject.Instantiate(astroidPrefabs[val]);
 
     //        float x = 0, y = 0, z = 0;
@@ -90,30 +98,30 @@ public class AsteroidController : MonoBehaviour {
 
 
 
-    //        astroid.transform.localScale = new Vector3(x,y,z);
+    //        astroid.transform.localScale = new Vector3(x, y, z);
 
     //        int pointInd = Random.Range(0, numPoints);
-            
+
     //        //astroids position based on a random basepoint + a random offset from that point
-    //        x = Random.Range(points[pointInd].x + (-spawnArea.x/ mod), points[pointInd].x +(spawnArea.x / mod));
-    //        y = Random.Range(points[pointInd].y +(-spawnArea.y/ mod), points[pointInd].y +(spawnArea.y / mod));
-    //        z = Random.Range(points[pointInd].z + (-spawnArea.z / mod), points[pointInd].z +(spawnArea.z / mod));
+    //        x = Random.Range(points[pointInd].x + (-spawnArea.x / mod), points[pointInd].x + (spawnArea.x / mod));
+    //        y = Random.Range(points[pointInd].y + (-spawnArea.y / mod), points[pointInd].y + (spawnArea.y / mod));
+    //        z = Random.Range(points[pointInd].z + (-spawnArea.z / mod), points[pointInd].z + (spawnArea.z / mod));
 
     //        //take into consideration ships ect at some point??
 
 
-    //        Vector3 pos = new Vector3(x,y,z);
+    //        Vector3 pos = new Vector3(x, y, z);
     //        Quaternion rot = Random.rotation;
     //        astroid.transform.position = pos;
     //        astroid.transform.rotation = rot;
     //        astroids.Add(astroid);
 
-          
+
 
     //    }
 
 
-        
+
 
 
 
@@ -198,6 +206,13 @@ public class AsteroidController : MonoBehaviour {
     {
 
         return astroids[GetRandomAstroidIndex()].transform.position;
+
+    }
+
+    public Vector3 GetAstroidPosition(int index)
+    {
+
+        return astroids[index].transform.position;
 
     }
 

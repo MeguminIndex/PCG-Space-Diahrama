@@ -97,11 +97,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8d9a132bee5e047b5ce04b8dd32459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useTestSeed: 0
+  testSeed: -123
+  sSystemData: {fileID: 11400000, guid: bba1b1591503dcb499e6b28b89a4ec11, type: 2}
   maxRedWeightDist: 700
-  maxBlueWeight: 1800
   rotationSpeed: 0.5
-  salvagingDronePref: {fileID: 1634788297009312, guid: d40c5378497a00c4f9fa6fab60cd0bfe,
-    type: 2}
+  salvagingDronePref:
+  - {fileID: 1634788297009312, guid: d40c5378497a00c4f9fa6fab60cd0bfe, type: 2}
+  - {fileID: 1494726342407560, guid: ac909bd79ba8ddc4dad26c3839bceeab, type: 2}
+  droneOneMaterialOptions:
+  - {fileID: 2100000, guid: 2954963d08a0b044e8f84eece7126e53, type: 2}
+  - {fileID: 2100000, guid: 5ea3f2b04e6194c458f574357c0d5a11, type: 2}
+  - {fileID: 2100000, guid: e1e01703f584a724fbf763040a52bd3e, type: 2}
+  - {fileID: 2100000, guid: d32d51bde7481754991152e84201a2a7, type: 2}
+  civilisationChance: 70
 --- !u!114 &114435395100871870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,7 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolution: 512
-  noise: 0
+  randomNoiseType: 0
+  noise: 3
   turbulence: 0
   perlinOctaves: 6
   displacement: 4
@@ -142,6 +152,10 @@ MonoBehaviour:
   astroidPrefabs:
   - {fileID: 1151066660536272, guid: fdb7ce3441ed9544e80691ee7f7ce5b3, type: 2}
   - {fileID: 1543364496266058, guid: 84f384b477018a14ebf7ec25cf419bde, type: 2}
+  - {fileID: 1885045196214284, guid: b890c1827ede5a144a9badbdebe7e16c, type: 2}
+  - {fileID: 1324014758894146, guid: 89b2cb3a01bdad54eb72559617f822b0, type: 2}
+  - {fileID: 1992944177965944, guid: 95cf92ed1bd7a444a877001618f59e3c, type: 2}
+  - {fileID: 1530707506567770, guid: bdb318f5cd4565d4aaaeaa24de96e0e8, type: 2}
 --- !u!135 &135601448701835736
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class GenerateSolaSystem : MonoBehaviour {
 
-    public int seed;
-    public bool useSeed;
+    public SolaSystemData solaSysData;
 
-    [Header("Star Properties")]
-    public GameObject[] starTypesPrefabs;
+    //public int seed;
+    //public bool useSeed;
 
-    [Header("Planet Properties")]
-    public int minNPlanets;
-    public int maxNPlanets;
-    public GameObject planetPrefab;
-    public float maxPlanDist;
-    public float minPlanDist;
-    public float maxPlanSize;
-    public float minPlanSize;
-    public float planetmindistOffset;
+    //[Header("Star Properties")]
+    //public GameObject[] starTypesPrefabs;
+
+    //[Header("Planet Properties")]
+    //public int minNPlanets;
+    //public int maxNPlanets;
+    //public GameObject planetPrefab;
+    //public float maxPlanDist;
+    //public float minPlanDist;
+    //public float maxPlanSize;
+    //public float minPlanSize;
+    //public float planetmindistOffset;
 
 
 
@@ -51,26 +53,28 @@ public class GenerateSolaSystem : MonoBehaviour {
         planetPos = new List<Vector3>();
         planets = new List<GameObject>();
 
-        if (useSeed)
-            Random.InitState(seed);
+        if (solaSysData.useSeed)
+            Random.InitState(solaSysData.seed);
 
-        nPlanets = Random.Range(minNPlanets, maxNPlanets);
+        nPlanets = Random.Range(solaSysData.minNPlanets, solaSysData.maxNPlanets);
 
-        starTypeID = Random.Range(0, starTypesPrefabs.Length);
+        starTypeID = Random.Range(0, solaSysData.starTypesPrefabs.Length);
 
-        sun = Instantiate(starTypesPrefabs[starTypeID]);
+        sun = Instantiate(solaSysData.starTypesPrefabs[starTypeID]);
 
         sun.transform.position = transform.position;
 
-        Debug.Log("N Planets: " + nPlanets.ToString());
+      //  Debug.Log("N Planets: " + nPlanets.ToString());
 
         
 
         for (int i = 0, progress = 0; progress < nPlanets; progress++)
         {
             Vector3 pos = Vector3.zero;
-            float randDIst = Random.Range(minPlanDist, maxPlanDist);
-            pos = Random.insideUnitSphere * randDIst;
+            float randDIst = Random.Range(solaSysData.minPlanDist, solaSysData.maxPlanDist);
+            pos = Random.onUnitSphere * randDIst;
+
+           
 
             //check planet is not too close
 
@@ -80,7 +84,7 @@ public class GenerateSolaSystem : MonoBehaviour {
             {
               //  Debug.Log(Vector3.Distance(pos, planetPos[c]));
 
-                if (Vector3.Distance(pos, planetPos[c]) < maxPlanSize + (maxPlanSize *2))
+                if (Vector3.Distance(pos, planetPos[c]) < solaSysData.maxPlanSize + (solaSysData.maxPlanSize * 2))
                 {
                   //  Debug.Log("Dont generate PLANET");
                     spawn = false;
@@ -88,7 +92,7 @@ public class GenerateSolaSystem : MonoBehaviour {
                 }
 
             }
-         //   Debug.Log("Planet SPawned");
+       
 
             if (spawn == true)
             {
@@ -104,9 +108,11 @@ public class GenerateSolaSystem : MonoBehaviour {
 
         for (int i = 0; i < planetPos.Count; i++)
         {
-            GameObject spawned = GameObject.Instantiate(planetPrefab);
+            GameObject spawned = GameObject.Instantiate(solaSysData.planetPrefab);
+
+            //Debug.Log("Planet Distance from sun: " + planetPos[i]);
             spawned.transform.position = transform.TransformPoint(planetPos[i]);
-            float size = Random.Range(minPlanSize,maxPlanSize);
+            float size = Random.Range(solaSysData.minPlanSize, solaSysData.maxPlanSize);
             spawned.transform.localScale = new Vector3(size, size, size);
 
 
@@ -128,7 +134,10 @@ public class GenerateSolaSystem : MonoBehaviour {
         Debug.Log("Updating Planets Started");
 
         int size = planets.Count;
-        for(int i=0; i < size; i++)
+
+        int wcount = 0;
+
+        for(int i=0; i < size; i++ , wcount++)
         {
             
             PlanetGenerator tmp = planets[i].GetComponent<PlanetGenerator>();
@@ -138,14 +147,25 @@ public class GenerateSolaSystem : MonoBehaviour {
             else
                 i += tmp.GenerateFullTexture();
 
-            yield return new WaitForSecondsRealtime(2);
-
+            if (wcount > 4)
+            {
+                yield return new WaitForSecondsRealtime(1.5f);
+                wcount = 0;
+            }
 
         }
 
         Debug.Log("Finished Updating Planets maps");
 
         Time.timeScale = 1;
+    }
+
+
+    void GenerateBattleAftermath()
+    {
+
+
+
     }
 
 }

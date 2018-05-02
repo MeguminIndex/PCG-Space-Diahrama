@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 205843671060069614}
   - component: {fileID: 54426698071530686}
   - component: {fileID: 135628009314436184}
+  - component: {fileID: 114323784349732744}
   m_Layer: 0
   m_Name: AstoriodMid01_WithLOD
   m_TagString: Asteroid
@@ -268,11 +269,29 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114323784349732744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1543364496266058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1d1ec6fb6d8844284c1fc676125fa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SystemData: {fileID: 11400000, guid: bba1b1591503dcb499e6b28b89a4ec11, type: 2}
+  standard: {fileID: 2100000, guid: 2f4b9f5329af0794fad3b6fbcbc06101, type: 2}
+  ice: {fileID: 2100000, guid: 5592112bbe8b96f489b6b78d420894fc, type: 2}
+  meshes:
+  - {fileID: 23826972454435974}
+  - {fileID: 23086952175223198}
+  - {fileID: 23635326226624594}
 --- !u!135 &135628009314436184
 SphereCollider:
   m_ObjectHideFlags: 1

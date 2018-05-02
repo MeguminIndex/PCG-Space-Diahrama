@@ -6,15 +6,15 @@ using LibNoise.Operator;
 using System.IO;
 using System;
 using UnityEngine;
-using System.Threading.Tasks;
+using System.Threading;
 
 public enum NoiseType
 {
     Perlin,
     Billow,
     RidgedMultifractal,
-    //Voronoi,
-    //Mix,
+    Voronoi,
+    Mix,
     Practice
 };
 
@@ -28,7 +28,9 @@ public class PlanetTextureMapping : MonoBehaviour
     Texture2D terrainMap;
 
     public int resolution = 64;
-    public NoiseType noise = NoiseType.Perlin;
+
+    public bool randomNoiseType;
+    public NoiseType noise = NoiseType.Voronoi;
     //public float zoom = 1f;
     //public float offset = 0f;
     public float turbulence = 0f;
@@ -42,15 +44,20 @@ public class PlanetTextureMapping : MonoBehaviour
     float _south = 90;
 
 
+
+    Thread t1;
+
     
     public void Start()
     {
+        seed = UnityEngine.Random.Range(0, 100);
 
-         noise = (NoiseType)UnityEngine.Random.Range(0,6);
+
+        if(randomNoiseType == true)
+        noise = (NoiseType)UnityEngine.Random.Range(0,6);
+
         // Generate();
-
-
-        Debug.Log("Noise Type: " + noise);
+       // Debug.Log("Noise Type: " + noise);
     }
 
     //public void OnGUI()
@@ -82,12 +89,8 @@ public class PlanetTextureMapping : MonoBehaviour
     public double frequency = 2;
     public int seed = 0;
 
-    //public void Generate()
-    //{
-    //    StartCoroutine(CoGen());
-    //}
 
-    public void Generate()
+    private void backgroundProcessing()
     {
         // Create the module network
         ModuleBase moduleBase;
@@ -101,24 +104,21 @@ public class PlanetTextureMapping : MonoBehaviour
                 moduleBase = new RidgedMultifractal();
                 break;
 
-            //case NoiseType.Voronoi:
-            //    seed = UnityEngine.Random.Range(0, 100);
-            //    moduleBase = new Voronoi(frequency, displacement, seed, false);
+            case NoiseType.Voronoi:
+                moduleBase = new Voronoi(frequency, displacement, seed, false);
 
-            //    break;
+                break;
 
-            //case NoiseType.Mix:
-            //    Perlin perlin = new Perlin();
-            //    var rigged = new RidgedMultifractal();
-            //    moduleBase = new Add(perlin, rigged);
-            //    break;
+            case NoiseType.Mix:
+                Perlin perlin = new Perlin();
+                var rigged = new RidgedMultifractal();
+                moduleBase = new Add(perlin, rigged);
+                break;
 
             case NoiseType.Practice:
                 var bill = new Billow();
                 bill.Frequency = frequency;
                 moduleBase = new Turbulence(turbulence / 10, bill);
-
-
                 break;
 
 
@@ -134,22 +134,36 @@ public class PlanetTextureMapping : MonoBehaviour
 
         // Initialize the noise map
         this.m_noiseMap = new Noise2D(resolution, resolution, moduleBase);
-       
 
         m_noiseMap.GenerateSpherical(_north, _south, _west, _east);
 
-      
+    }
+
+
+
+
+    private IEnumerator CheckBackgroundThread()
+    {
+        t1 = new Thread(backgroundProcessing) { Name = "backgroundProcessing" };
+        t1.Start();
+
+        while(t1.IsAlive)
+        {
+            yield return null;
+        }
 
         heighMap = this.m_noiseMap.GetTexture(GradientPresets.Grayscale);
-        heighMap.Apply();
-
         terrainMap = this.m_noiseMap.GetTexture(GradientPresets.Terrain);
-        terrainMap.Apply();
-
         normalMap = this.m_noiseMap.GetNormalMap(3.0f);
+
+        yield return null;
+
+        //heighMap = this.m_noiseMap.GetTexture(GradientPresets.Grayscale);
+        heighMap.Apply();
+        //terrainMap = this.m_noiseMap.GetTexture(GradientPresets.Terrain);
+        terrainMap.Apply();
+        //normalMap = this.m_noiseMap.GetNormalMap(3.0f);
         normalMap.Apply();
-
-
 
         Renderer rend = GetComponent<Renderer>();
         rend.material.mainTexture = terrainMap;
@@ -159,13 +173,21 @@ public class PlanetTextureMapping : MonoBehaviour
 
         rend.material.EnableKeyword("_BumpMap");
         rend.material.SetTexture("_BumpMap", normalMap);
-       
 
-        Debug.Log($"Planet: {gameObject.name} Maps generated");
+
+        //Debug.Log($"Planet: {gameObject.name} Maps generated");
 
         normalMap = null;
         heighMap = null;
         terrainMap = null;
+        m_noiseMap = null;
+
+    }
+
+    public void Generate()
+    {
+        StartCoroutine(CheckBackgroundThread());
+       
     }
 
 
